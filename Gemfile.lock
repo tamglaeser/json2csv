@@ -1,0 +1,17 @@
+GEM
+  specs:
+    power_assert (2.0.3)
+    test-unit (3.6.1)
+      power_assert
+
+PLATFORMS
+  x64-mingw-ucrt
+
+DEPENDENCIES
+  test-unit
+
+RUBY VERSION
+   ruby 3.2.2p53
+
+BUNDLED WITH
+   2.4.10

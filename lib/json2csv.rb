@@ -3,6 +3,18 @@ require 'json'
 require 'csv'
 
 
+# To separate processing args from code (for tests)
+def process_arguments(args)
+  if args.length == 2
+    json_file_path = args[0]
+    csv_file_path = args[1]
+    json_to_csv(json_file_path, csv_file_path)
+  else
+    puts "Usage: ruby lib/json2csv.rb <input_json_file> <output_csv_file>"
+    exit(1)
+  end
+end
+
 # Convert array to comma-delimited string
 def convert_list_to_string(val)
   if val.is_a?(Array)
@@ -54,12 +66,7 @@ def json_to_csv(json_file, csv_file)
   puts "Conversion successful! CSV file saved as #{csv_file}"
 end
 
-if ARGV.length != 2
-  puts "Usage: ruby json2csv.rb <input_json_file> <output_csv_file>"
-  exit(1)
+# If this script is run directly from the command line
+if $PROGRAM_NAME == __FILE__
+  process_arguments(ARGV)
 end
-
-json_file_path = ARGV[0]
-csv_file_path = ARGV[1]
-
-json_to_csv(json_file_path, csv_file_path)
