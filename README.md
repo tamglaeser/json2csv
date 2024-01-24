@@ -38,6 +38,11 @@ To test the library:
 ruby test/json2csv_test.rb
 ```
 
+To run lint on the library (code quality):
+```bash
+rubocop
+```
+
 
 ### Project Structure
 ````bash
