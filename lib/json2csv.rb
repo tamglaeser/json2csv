@@ -27,7 +27,7 @@ end
 
 # Flatten a nested object using dot notation
 # hash : Object, ie. user
-def flatten_hash(hash, prefix = "")
+def flatten_hash(hash, prefix = "")  # O(m)
   hash.each_with_object({}) do |(key, value), flattened_hash|
     new_key = prefix.empty? ? key.to_s : "#{prefix}.#{key}"
     if value.is_a?(Hash)
@@ -40,30 +40,30 @@ end
 
 # Convert an array of objects with potentially nested structure to a flattened array of objects
 # data_array : Array of objects
-def flatten_array_of_objects(data_array)
+def flatten_array_of_objects(data_array)  # O(n*m)
   data_array.map do |row|
-    flatten_hash(row).transform_keys(&:to_s).to_h
+    flatten_hash(row).transform_keys(&:to_s).transform_values { |value| convert_list_to_string(value) }.to_h
   end
 end
 
-def write_to_csv(csv_file, flat_data)
+def write_to_csv(csv_file, flat_data)  # O(n*m)
   CSV.open(csv_file, "w") do |csv|
     csv << flat_data.first.keys
 
     flat_data.each do |obj|
-      converted_row = obj.transform_values { |value| convert_list_to_string(value) }
-      csv << converted_row.values
+      csv << obj.values
     end
   end
 end
 
 # Read JSON input file, flatten nested properties, and write flattened data to CSV output file
-def json_to_csv(json_file, csv_file)
+def json_to_csv(json_file, csv_file)  # O(n*m)
   json_data = File.read(json_file)
   data_array = JSON.parse(json_data)
-  flattened_data = flatten_array_of_objects(data_array)
 
-  write_to_csv(csv_file, flattened_data)
+  flattened_data = flatten_array_of_objects(data_array)  # O(n*m)
+
+  write_to_csv(csv_file, flattened_data)  # O(n*m)
 
   puts "Conversion successful! CSV file saved as #{csv_file}"
 end

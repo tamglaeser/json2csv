@@ -43,7 +43,6 @@ To run lint on the library (code quality):
 rubocop
 ```
 
-
 ### Project Structure
 ````bash
 json2csv/
@@ -58,3 +57,18 @@ json2csv/
 └── ...          # Other project-related files and folders
 
 ````
+
+### Future Work
+
+#### Big(O)
+
+##### Time Complexity
+The time complexity for the current code is O(n*m) where n is the number of objects within the input JSON array and m 
+is the number of key-value pairs within each object. This is because the principle tasks of this library are (1) 
+flattening each object within the input JSON to define nested objects using dot-notation and (2) writing this flattened 
+data to the output CSV file, both of which have complexity O(n*m) and so O(n*m) + O(n*m) = O(2(n*m)) = O(n*m). This 
+calculation assumes that the size of the JSON data when reading/parsing it and the new number of keys within the 
+flattened objects are not significant compared to the 2 dominant factors, n and m.
+
+##### Space Complexity
+The space complexity is also O(n*m).
